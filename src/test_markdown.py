@@ -1,6 +1,6 @@
 import unittest
 from textnode import TextNode, TextType
-from markdown import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes
+from markdown import split_nodes_delimiter, extract_markdown_images, extract_markdown_links, split_nodes_image, split_nodes_link, text_to_textnodes, markdown_to_blocks
 
 
 class TestInlineMarkdown(unittest.TestCase):
@@ -231,6 +231,44 @@ class TestTextToTextNodes(unittest.TestCase):
                 TextNode("link", TextType.LINK, "https://boot.dev"),
             ],
             nodes,
+        )
+
+class TestBlockMarkdown(unittest.TestCase):
+    def test_markdown_to_blocks(self):
+        markdown = """
+# This is a heading
+
+This is a paragraph of text. It has some **bold** and *italic* words inside of it.
+
+* This is the first list item in a list block
+* This is a list item
+* This is another list item
+"""
+        blocks = markdown_to_blocks(markdown)
+        self.assertListEqual(
+            [
+                "# This is a heading",
+                "This is a paragraph of text. It has some **bold** and *italic* words inside of it.",
+                "* This is the first list item in a list block\n* This is a list item\n* This is another list item",
+            ],
+            blocks,
+        )
+
+    def test_markdown_to_blocks_excessive_newlines(self):
+        markdown = """
+This is a paragraph.
+
+
+
+This is another paragraph with too much space above it.
+"""
+        blocks = markdown_to_blocks(markdown)
+        self.assertListEqual(
+            [
+                "This is a paragraph.",
+                "This is another paragraph with too much space above it.",
+            ],
+            blocks,
         )
 
 if __name__ == "__main__":
