@@ -120,18 +120,4 @@ def text_to_textnodes(text):
 
     return nodes
 
-def markdown_to_blocks(markdown):
-    raw_blocks = markdown.split("\n\n")
-
-    clean_blocks = []
-    for block in raw_blocks:
-        stripped_block = block.strip()
-
-        if stripped_block == "":
-            continue
-
-        clean_blocks.append(stripped_block)
-
-    return clean_blocks
-
 
