@@ -1,13 +1,16 @@
-from textnode import TextNode, TextType
-from htmlnode import LeafNode
 from copystatic import copy_files_recursive
+from page_generator import generate_page
+
 
 def main():
     print("Setting up public directory...")
     copy_files_recursive("static", "public")
+
+    print("Generating pages...")
+    generate_page("content/index.md", "template.html", "public/index.html")
+
     print("Done!")
 
 
-# Standard Python practice to ensure main() only runs if the script is executed directly
 if __name__ == "__main__":
     main()
