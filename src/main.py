@@ -1,5 +1,5 @@
 from copystatic import copy_files_recursive
-from page_generator import generate_page
+from page_generator import generate_pages_recursive
 
 
 def main():
@@ -7,7 +7,7 @@ def main():
     copy_files_recursive("static", "public")
 
     print("Generating pages...")
-    generate_page("content/index.md", "template.html", "public/index.html")
+    generate_pages_recursive("content", "template.html", "public")
 
     print("Done!")
 
