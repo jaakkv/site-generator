@@ -1,13 +1,18 @@
+import sys
 from copystatic import copy_files_recursive
 from page_generator import generate_pages_recursive
 
 
 def main():
-    print("Setting up public directory...")
-    copy_files_recursive("static", "public")
+    basepath = "/"
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
 
-    print("Generating pages...")
-    generate_pages_recursive("content", "template.html", "public")
+    print("Setting up docs directory...")
+    copy_files_recursive("static", "docs")
+
+    print(f"Generating pages with basepath: '{basepath}'")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
     print("Done!")
 
